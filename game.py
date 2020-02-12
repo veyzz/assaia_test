@@ -40,24 +40,35 @@ class Game:
              self.check_axis(coord, (-1, 0)), self.check_axis(coord, (-1, -1)),
              self.check_axis(coord, (0, -1)), self.check_axis(coord, (1, -1))))
 
-    def end_game_condition_check(self, coord):
+    def win_condition_check(self):
         for i in range(len(self.board)):
             for j in range(len(self.board.matrix[i])):
                 if self.check_from_cell((i, j)):
                     return True
         return False
 
+    def draw_condition_check(self):
+        if self.board.filled == len(self.board):
+            return True
+
     def game_loop(self):
         while True:
             print(self.board)
             print(f"Now player's {self.active_player + 1} turn")
-            column = int(input())
+            try:
+                column = int(input())
+            except ValueError:
+                continue
             height = self.board.push(column,
                                      self.players[self.active_player].marker)
             if height is None:
                 continue
-            if self.end_game_condition_check((column, height)):
+            if self.win_condition_check():
                 print(self.board)
-                print(f"Game over. Player {self.active_player + 1} wins")
+                print(f"Game over. Player {self.active_player + 1} wins.")
+                break
+            if self.draw_condition_check():
+                print(self.board)
+                print("Game over. Draw.")
                 break
             self.active_player = (self.active_player + 1) % len(self.players)
