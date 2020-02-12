@@ -25,4 +25,3 @@ class Board:
                     s += '.'
             s += '\n'
         return s
-

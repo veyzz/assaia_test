@@ -1,4 +1,4 @@
 from game import Game
 
-g = Game((6, 7))
+g = Game((7, 6))
 g.game_loop()
